@@ -1,0 +1,14 @@
+- L = 2
+
+iteration   0   1   2   3   4   5   6   7
+array1      max max 
+array2      000 000 001
+                S   *   *   S   N   *   M
+
+
+1 iteration
+
+i = 2
+j = 1
+
+Mask is 001 because of we wrote S in the previous cell.
