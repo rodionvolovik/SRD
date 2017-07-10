@@ -1,8 +1,8 @@
 - L = 2
 
 iteration   0   1   2   3   4   5   6   7
-array1      max max 
-array2      000 000 001
+array1      max max 1   2
+array2      000 000 001 111
                 S   *   *   S   N   *   M
 
 

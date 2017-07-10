@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvolovik <rvolovik@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvolovik <rodionvolovik@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/08 16:42:36 by rvolovik          #+#    #+#             */
-/*   Updated: 2017/07/09 20:27:07 by rvolovik         ###   ########.fr       */
+/*   Updated: 2017/07/10 10:57:50 by rvolovik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,58 +79,67 @@ int    solver(int n, int c, int k, char *data)
         i++;
     }
 
+    arr1[0] = 0;
+    arr2[0] = 0;
     min_val = min_val_count(c, n, l++, k);
-    // printf("minval init %d\n", min_val);
-    while (l <= n)
+
+    int     ii, ll, flag = 0;
+
+    while (arr1[n] < MAX_RESULT)
     {
-        init_arr(arr1, MAX_RESULT, n, l);
-        init_arr(arr2, 0, n, l);
-        i = l;
+        i = 1;
+        ii = i - 1;
+        ll = l - 1;
         while (i <= n)
         {
             var1 = MAX_RESULT;
             var2 = 0;
-            if ((mask = check_condition(table[S][i], table[S][i - l], table[N][i], table[N][i - l], table[M][i], table[M][i - l])) >= 0)
+            if (i <= ll)
             {
-                // printf("mask = %d\n", mask);
-                if (arr1[i - l] != MAX_RESULT)
+                if (data[ii] != '*')
                 {
-                    var1 = arr1[i - l] + 1;
-                    var2 = mask;
-                }
-                j = i - l + 1;
-                while (j < i)
-                {
-                    if (mask & arr2[j] != 0 && arr1[j] + 1 < var1)
+                    if (!flag)
+                        flag = data[ii];
+                    else if (data[ii] != flag)
                     {
-                        var1 = arr1[j] + 1;
-                        var2 = mask & arr2[j];
+                        arr1[n] = MAX_RESULT;
+                        break;
                     }
-                    j++;
+                }
+            }
+            else
+            {
+                if ((mask = check_condition(table[S][i], table[S][i - l], table[N][i], table[N][i - l], table[M][i], table[M][i - l])) >= 0)
+                {
+                    // printf("mask = %d\n", mask);
+                    if (arr1[i - l] != MAX_RESULT)
+                    {
+                        var1 = arr1[i - l] + 1;
+                        var2 = mask;
+                    }
+                    j = i - l + 1;
+                    while (j < i)
+                    {
+                        if ((mask & arr2[j]) != 0 && arr1[j] + 1 < var1)
+                        {
+                            var1 = arr1[j] + 1;
+                            var2 = mask & arr2[j];
+                        }
+                        j++;
+                    }
                 }
             }
             arr1[i] = var1;
             arr2[i] = var2;
             i++;
         }
-        // for (int f = 0; f < n + 1; f++)
-        //     printf("%d\t", arr1[f]);
-        // printf("\n");
-        // for (int f = 0; f < n + 1; f++)
-        //     printf("%d\t", arr2[f]);
-        // printf("\n");
         if (arr1[n] != MAX_RESULT)
         {
             if (min_val_count(c, arr1[n], l, k) <= min_val)
-            {
                 min_val = min_val_count(c, arr1[n], l, k);
-                // printf("val = %d\n", min_val_count(c, arr1[n], l, k));
-            }
-            // printf("val = %d\n, minval = %d\n", min_val_count(c, arr1[n], l, k), min_val);
         }
         l++;
     }
-    // printf("minval = [%d]\n", min_val);
     return (min_val);
 }
 
@@ -140,8 +149,6 @@ int     main(void)
     char        data[N_MAX + 1];
     int         i;
 
-    // while (i <= N_MAX)
-    //     data[i++] = '\0';
     scanf("%d %d %d", &n, &c, &k);
     scanf("%s", data);
     result = solver(n, c, k, data);
