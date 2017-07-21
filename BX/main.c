@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvolovik <rodionvolovik@gmail.com>         +#+  +:+       +#+        */
+/*   By: rvolovik <rvolovik@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/10 11:00:06 by rvolovik          #+#    #+#             */
-/*   Updated: 2017/07/10 18:44:22 by rvolovik         ###   ########.fr       */
+/*   Updated: 2017/07/11 11:14:37 by rvolovik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ int    solver(void)
     for (i = 0; i < n - 1; i++)
     {
         scanf("%d %d %d", &cost, &city1, &city2);
+        //if (cost == '\n')
+        //    continue;
         matrix[city1 - 1][city2 - 1] = cost;
         matrix[city2 - 1][city1 - 1] = cost;
     }
